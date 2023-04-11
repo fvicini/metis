@@ -32,9 +32,9 @@
 
 
 #ifdef __MSC__ 
-  #include "ms_stdint.h"
-  #include "ms_inttypes.h"
-  #include "ms_stat.h"
+  #include "gk_ms_stdint.h"
+  #include "gk_ms_inttypes.h"
+  #include "gk_ms_stat.h"
   #include "win32/adapt.h"
 #else
 #ifndef SUNOS
@@ -42,7 +42,9 @@
 #endif
   #include <inttypes.h>
   #include <sys/types.h>
+#ifndef __MINGW32__
   #include <sys/resource.h>
+#endif
   #include <sys/time.h>
   #include <unistd.h>
 #endif

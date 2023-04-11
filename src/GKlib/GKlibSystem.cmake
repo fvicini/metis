@@ -8,10 +8,12 @@ option(ASSERT "turn asserts on" OFF)
 option(ASSERT2 "additional assertions" OFF)
 option(DEBUG "add debugging support" OFF)
 option(GPROF "add gprof support" OFF)
+option(VALGRIND "add valgrind support" OFF)
 option(OPENMP "enable OpenMP support" OFF)
 option(PCRE "enable PCRE support" OFF)
 option(GKREGEX "enable GKREGEX support" OFF)
 option(GKRAND "enable GKRAND support" OFF)
+option(NO_X86 "enable NO_X86 support" OFF)
 
 
 # Add compiler flags.
@@ -29,7 +31,16 @@ endif(CYGWIN)
 if(CMAKE_COMPILER_IS_GNUCC)
 # GCC opts.
   set(GKlib_COPTIONS "${GKlib_COPTIONS} -std=c99 -fno-strict-aliasing")
+if(VALGRIND)
+  set(GKlib_COPTIONS "${GK_COPTIONS} -march=x86-64 -mtune=generic")
+else()
+# -march=native is not a valid flag on PPC:
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "power|ppc|powerpc|ppc64|powerpc64" OR (APPLE AND CMAKE_OSX_ARCHITECTURES MATCHES "ppc|ppc64"))
+  set(GKlib_COPTIONS "${GKlib_COPTIONS} -mtune=native")
+else()
   set(GKlib_COPTIONS "${GKlib_COPTIONS} -march=native")
+endif()
+endif(VALGRIND)
   if(NOT MINGW)
       set(GKlib_COPTIONS "${GKlib_COPTIONS} -fPIC")
   endif(NOT MINGW)
@@ -55,6 +66,10 @@ if(OPENMP)
   endif(OPENMP_FOUND)
 endif(OPENMP)
 
+# Set the CPU type 
+if(NO_X86)
+  set(GKlib_COPTIONS "${GKlib_COPTIONS} -DNO_X86=${NO_X86}")
+endif(NO_X86)
 
 # Add various definitions.
 if(GDB)

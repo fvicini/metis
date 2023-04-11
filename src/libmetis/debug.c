@@ -3,7 +3,7 @@
  *
  * debug.c
  *
- * This file contains code that performs self debuging
+ * This file contains code that performs self debugging
  *
  * Started 7/24/97
  * George
@@ -233,6 +233,9 @@ idx_t CheckRInfo(ctrl_t *ctrl, ckrinfo_t *rinfo)
 {
   idx_t i, j;
   cnbr_t *nbrs;
+
+  ASSERT(ctrl->nbrpoolcpos >= 0);
+  ASSERT(rinfo->nnbrs < ctrl->nparts);
 
   nbrs = ctrl->cnbrpool + rinfo->inbr;
 

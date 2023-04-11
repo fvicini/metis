@@ -41,8 +41,6 @@
 #define Match_JC                        libmetis__Match_JC
 #define PrintCGraphStats                libmetis__PrintCGraphStats
 #define CreateCoarseGraph		libmetis__CreateCoarseGraph
-#define CreateCoarseGraphNoMask		libmetis__CreateCoarseGraphNoMask
-#define CreateCoarseGraphPerm		libmetis__CreateCoarseGraphPerm
 #define SetupCoarseGraph		libmetis__SetupCoarseGraph
 #define ReAdjustMemory			libmetis__ReAdjustMemory
 
@@ -95,6 +93,7 @@
 #define SetupSplitGraph                 libmetis__SetupSplitGraph
 #define CreateGraph                     libmetis__CreateGraph
 #define InitGraph                       libmetis__InitGraph
+#define FreeSData                       libmetis__FreeSData
 #define FreeRData                       libmetis__FreeRData
 #define FreeGraph                       libmetis__FreeGraph
 #define graph_WriteToDisk               libmetis__graph_WriteToDisk
