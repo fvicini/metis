@@ -8,12 +8,6 @@ set(CMAKE_C_STANDARD 99)
 
 # Create library variables
 ###############################################################################################
-set(METIS_LIBRARY_SOURCES ${PROJECT_NAME}_sources)
-set(METIS_LIBRARY_HEADERS ${PROJECT_NAME}_headers)
-set(METIS_LIBRARY_PUBLIC_HEADERS ${PROJECT_NAME}_public_headers)
-set(METIS_LIBRARY_LINKED_LIBRARIES ${PROJECT_NAME}_linked_libraries)
-set(METIS_LIBRARY_INCLUDE ${PROJECT_NAME}_include)
-set(METIS_LIBRARY_ADDITIONAL_INCLUDE ${PROJECT_NAME}_additional_include)
 set(METIS_INSTALL_DIR ${PROJECT_NAME})
 set(METIS_INSTALL_BINARY_DIR bin/)
 set(METIS_INSTALL_INCLUDE_DIR include/)
@@ -27,20 +21,22 @@ Message(STATUS "METIS Build configuration: " ${CMAKE_BUILD_TYPE})
 
 # Configure libmetis library.
 option(BUILD_TESTING "Build METIS self-tests" OFF)
+
+if(NOT intsize)
+  set(intsize 32)
+endif()
+if(NOT realsize)
+  set(realsize 64)
+endif()
+
 if(BUILD_SHARED_LIBS)
   set(METIS_LIBRARY_TYPE SHARED)
 else()
   set(METIS_LIBRARY_TYPE STATIC)
 endif()
 
-if(NOT intsize)
-  set(intsize 32)
-endif()
-if(NOT realsize)
-  set(realsize 32)
-endif()
-
 set(GKLIB_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src/GKlib CACHE PATH "path to GKlib")
+
 
 # Add dependencies
 ###########################################################################################
@@ -54,7 +50,6 @@ include(${GKLIB_PATH}/GKlibSystem.cmake)
 # Recursively look for CMakeLists.txt in subdirs.
 add_subdirectory(src/include)
 add_subdirectory(src/libmetis)
-add_subdirectory(src/programs)
 
 # Create install target
 ###############################################################################################
